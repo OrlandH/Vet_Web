@@ -1,5 +1,7 @@
 // Importar Router de Express
+import verificarAutenticacion from '../middlewares/autenticacion.js'
 import { Router } from "express";
+
 // Importar los metodos del controlador
 import {
   login,
@@ -16,17 +18,18 @@ import {
 } from "../controllers/veterinario_controller.js";
 // Crear una instancia de Router()
 const router = Router();
-router.post("/login", login);
-router.post("/registro", registro);
-router.get("/confirmar/:token", confirmEmail);
-router.get("/veterinarios", listarVeterinarios);
-router.get("/recuperar-password", recuperarPassword);
-router.get("/recuperar-password/:token", comprobarTokenPasword);
-router.post("/nuevo-password/:token", nuevoPassword);
+router.post('/login',login)
+router.post('/registro',registro)
+router.get('/confirmar/:token',confirmEmail)
+router.get('/veterinarios',listarVeterinarios)
+router.post('/recuperar-password',recuperarPassword)
+router.get('/recuperar-password/:token',comprobarTokenPasword)
+router.post('/nuevo-password/:token',nuevoPassword)
 
-router.get("/perfil", perfil);
-router.put("/veterinario/actualizarpassword", actualizarPassword);
-router.get("/veterinario/:id", detalleVeterinario);
-router.put("/veterinario/:id", actualizarPerfil);
+router.get('/perfil',verificarAutenticacion,perfil)
+router.put('/veterinario/actualizarpassword',verificarAutenticacion,actualizarPassword)
+router.get('/veterinario/:id',verificarAutenticacion,detalleVeterinario)
+router.put('/veterinario/:id',verificarAutenticacion,actualizarPerfil)
+
 // Exportar la variable router
 export default router;
